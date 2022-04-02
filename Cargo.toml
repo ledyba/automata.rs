@@ -2,6 +2,7 @@
 name = "automata"
 version = "0.0.0"
 edition = "2021"
+authors = ["Kaede Fujisaki <kaede@hexe.net>"]
 description = "Automata library"
 license = "AGPL-3.0-or-later"
 
