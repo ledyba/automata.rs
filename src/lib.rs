@@ -1,3 +1,5 @@
+pub mod dfa;
+
 #[cfg(test)]
 mod tests {
   #[test]
