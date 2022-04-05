@@ -57,7 +57,13 @@ impl <S, K> SpecBuilder<S, K>
     self
   }
 
+  fn validate(&self) -> anyhow::Result<()> {
+
+    Ok(())
+  }
+
   pub fn build(self) -> anyhow::Result<Spec<S, K>> {
+    self.validate()?;
     Ok(Spec::<S, K> {
       initial: self.initial,
       states: self.states,
