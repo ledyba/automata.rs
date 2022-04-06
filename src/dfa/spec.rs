@@ -57,19 +57,13 @@ impl <S, K> SpecBuilder<S, K>
     self
   }
 
-  fn validate(&self) -> anyhow::Result<()> {
-
-    Ok(())
-  }
-
-  pub fn build(self) -> anyhow::Result<Spec<S, K>> {
-    self.validate()?;
-    Ok(Spec::<S, K> {
+  pub fn build(self) -> Spec<S, K> {
+    Spec::<S, K> {
       initial: self.initial,
       states: self.states,
       accept_states: self.accept_states,
       transition: self.transition,
-    })
+    }
   }
 }
 
@@ -87,7 +81,7 @@ mod tests {
         .add_transition(1, '2', 2)
         .add_transition(2, '2', 2)
         .add_transition(2, 'e', 4)
-        .build().expect("Failed to create spec");
+        .build();
     assert_eq!(0, spec.initial);
     assert!(spec.states.eq(&HashSet::from([0, 1, 2, 3, 4])));
     assert!(spec.accept_states.eq(&HashSet::from([3, 4])));
