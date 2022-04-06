@@ -2,28 +2,28 @@ use std::hash::Hash;
 use crate::dfa::spec::Spec;
 use crate::errors::TransitionError;
 
-pub struct Machine <Stat, Tran>
+pub struct Machine <Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
-  spec: Spec<Stat, Tran>,
+  spec: Spec<Stat, Token>,
   current: Stat,
 }
 
-impl <Stat, Tran> Machine<Stat, Tran>
+impl <Stat, Token> Machine<Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
-  pub fn from_spec(spec: Spec<Stat, Tran>) -> Self {
+  pub fn from_spec(spec: Spec<Stat, Token>) -> Self {
     let current = spec.initial.clone();
     Self {
       spec,
       current,
     }
   }
-  pub fn step(&mut self, token: Tran) -> Result<(), TransitionError> {
+  pub fn step(&mut self, token: Token) -> Result<(), TransitionError> {
     if let Some(next) = self.spec.transitions.get(&(self.current.clone(), token)) {
       self.current = next.clone();
     } else {
@@ -36,7 +36,7 @@ impl <Stat, Tran> Machine<Stat, Tran>
     self.spec.accept_states.contains(&self.current)
   }
 
-  pub fn has_transition(&self, token: Tran) -> bool {
+  pub fn has_transition(&self, token: Token) -> bool {
     self.spec.transitions.contains_key(&(self.current.clone(), token))
   }
 }

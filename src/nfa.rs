@@ -1,17 +1,17 @@
 use std::hash::Hash;
 
-pub struct Spec<Stat, Trans>
+pub struct Spec<Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
 
 }
 
-impl <Stat, Tran> Spec <Stat, Tran>
+impl <Stat, Token> Spec <Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
   pub fn to_dfa_spec(self) -> crate::dfa::Spec<Stat, Trans> {
     todo!()

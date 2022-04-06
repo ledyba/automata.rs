@@ -1,32 +1,32 @@
 use std::{collections::{HashSet, HashMap}, hash::Hash};
 
 #[derive(Clone)]
-pub struct Spec<Stat, Tran>
+pub struct Spec<Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
   pub initial: Stat,
   pub all_states: HashSet<Stat>,
   pub accept_states: HashSet<Stat>,
-  pub transitions: HashMap<(Stat, Tran), Stat>,
+  pub transitions: HashMap<(Stat, Token), Stat>,
 }
 
-pub struct SpecBuilder <Stat, Tran>
+pub struct SpecBuilder <Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
   initial: Stat,
   all_states: HashSet<Stat>,
   accept_states: HashSet<Stat>,
-  transition: HashMap<(Stat, Tran), Stat>,
+  transition: HashMap<(Stat, Token), Stat>,
 }
 
-impl <Stat, Tran> SpecBuilder<Stat, Tran>
+impl <Stat, Token> SpecBuilder<Stat, Token>
   where
     Stat: Eq + Hash + Clone,
-    Tran: Eq + Hash + Clone,
+    Token: Eq + Hash + Clone,
 {
   pub fn new(initial: Stat) -> Self {
     Self {
@@ -59,14 +59,14 @@ impl <Stat, Tran> SpecBuilder<Stat, Tran>
     self
   }
 
-  pub fn add_transition(mut self, from: Stat, by: Tran, to: Stat) -> Self {
+  pub fn add_transition(mut self, from: Stat, by: Token, to: Stat) -> Self {
     self = self.add_state(from.clone());
     self = self.add_state(to.clone());
     self.transition.insert((from, by), to);
     self
   }
 
-  pub fn build(self) -> Spec<Stat, Tran> {
+  pub fn build(self) -> Spec<Stat, Token> {
     if !self.accept_states.is_subset(&self.all_states) {
       panic!("BUG. Accept states is not subset of all states.")
     }
@@ -77,7 +77,7 @@ impl <Stat, Tran> SpecBuilder<Stat, Tran>
     if !trans_keys.is_subset(&self.all_states) {
       panic!("BUG. All states in transition table is not subset of all states.")
     }
-    Spec::<Stat, Tran> {
+    Spec::<Stat, Token> {
       initial: self.initial,
       all_states: self.all_states,
       accept_states: self.accept_states,
