@@ -9,7 +9,7 @@ pub struct Spec<Stat, Tran>
   pub initial: Stat,
   pub states: HashSet<Stat>,
   pub accept_states: HashSet<Stat>,
-  pub transition: HashMap<(Stat, Tran), Stat>,
+  pub transitions: HashMap<(Stat, Tran), Stat>,
 }
 
 pub struct SpecBuilder <Stat, Tran>
@@ -71,7 +71,7 @@ impl <Stat, Tran> SpecBuilder<Stat, Tran>
       initial: self.initial,
       states: self.states,
       accept_states: self.accept_states,
-      transition: self.transition,
+      transitions: self.transition,
     }
   }
 }
@@ -94,7 +94,7 @@ mod tests {
     assert_eq!(0, spec.initial);
     assert!(spec.states.eq(&HashSet::from([0, 1, 2, 3, 4])));
     assert!(spec.accept_states.eq(&HashSet::from([3, 4])));
-    assert!(spec.transition.eq(&HashMap::from([
+    assert!(spec.transitions.eq(&HashMap::from([
       ((0, '1'), 1),
       ((1, '2'), 2),
       ((2, '2'), 2),

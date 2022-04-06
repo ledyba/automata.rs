@@ -24,7 +24,7 @@ impl <Stat, Tran> Machine<Stat, Tran>
     }
   }
   pub fn step(&mut self, token: Tran) -> Result<(), TransitionError> {
-    if let Some(next) = self.spec.transition.get(&(self.current.clone(), token)) {
+    if let Some(next) = self.spec.transitions.get(&(self.current.clone(), token)) {
       self.current = next.clone();
     } else {
       return Err(TransitionError::NoSuchTransition);
@@ -35,7 +35,7 @@ impl <Stat, Tran> Machine<Stat, Tran>
     self.spec.accept_states.contains(&self.current)
   }
   pub fn has_transition(&self, token: Tran) -> bool {
-    self.spec.transition.contains_key(&(self.current.clone(), token))
+    self.spec.transitions.contains_key(&(self.current.clone(), token))
   }
 }
 
