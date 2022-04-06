@@ -1,3 +1,4 @@
+use std::collections::{HashMap, HashSet};
 use std::hash::Hash;
 
 pub struct Spec<Stat, Token>
@@ -5,7 +6,9 @@ pub struct Spec<Stat, Token>
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone,
 {
-
+  all_states: HashSet<Stat>,
+  accept_states: HashSet<Stat>,
+  transitions: HashMap<(Stat, Option<Token>), HashSet<Stat>>
 }
 
 impl <Stat, Token> Spec <Stat, Token>
