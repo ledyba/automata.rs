@@ -1,25 +1,34 @@
 use std::{collections::{HashSet, HashMap}, hash::Hash};
 
-pub struct Spec<S, K> {
-  pub initial: S,
-  pub states: HashSet<S>,
-  pub accept_states: HashSet<S>,
-  pub transition: HashMap<(S, K), S>,
-}
-
-pub struct SpecBuilder <S, K> {
-  initial: S,
-  states: HashSet<S>,
-  accept_states: HashSet<S>,
-  transition: HashMap<(S, K), S>,
-}
-
-impl <S, K> SpecBuilder<S, K>
+#[derive(Clone)]
+pub struct Spec<Stat, Tran>
   where
-    S: Eq + Hash + Clone,
-    K: Eq + Hash + Clone,
+    Stat: Eq + Hash + Clone,
+    Tran: Eq + Hash + Clone,
 {
-  pub fn new(initial: S) -> Self {
+  pub initial: Stat,
+  pub states: HashSet<Stat>,
+  pub accept_states: HashSet<Stat>,
+  pub transition: HashMap<(Stat, Tran), Stat>,
+}
+
+pub struct SpecBuilder <Stat, Tran>
+  where
+    Stat: Eq + Hash + Clone,
+    Tran: Eq + Hash + Clone,
+{
+  initial: Stat,
+  states: HashSet<Stat>,
+  accept_states: HashSet<Stat>,
+  transition: HashMap<(Stat, Tran), Stat>,
+}
+
+impl <Stat, Tran> SpecBuilder<Stat, Tran>
+  where
+    Stat: Eq + Hash + Clone,
+    Tran: Eq + Hash + Clone,
+{
+  pub fn new(initial: Stat) -> Self {
     Self {
       initial: initial.clone(),
       states: HashSet::from([initial]),
@@ -28,37 +37,37 @@ impl <S, K> SpecBuilder<S, K>
     }
   }
 
-  pub fn add_state(mut self, state: S) -> Self {
+  pub fn add_state(mut self, state: Stat) -> Self {
     self.states.insert(state);
     self
   }
 
-  pub fn add_states<const N: usize>(mut self, states: [S; N]) -> Self {
+  pub fn add_states<const N: usize>(mut self, states: [Stat; N]) -> Self {
     self.states.extend(states);
     self
   }
 
-  pub fn add_accept_state(mut self, state: S) -> Self {
+  pub fn add_accept_state(mut self, state: Stat) -> Self {
     self.states.insert(state.clone());
     self.accept_states.insert(state);
     self
   }
 
-  pub fn add_accept_states<const N: usize>(mut self, states: [S; N]) -> Self {
+  pub fn add_accept_states<const N: usize>(mut self, states: [Stat; N]) -> Self {
     self = self.add_states(states.clone());
     self.accept_states.extend(states);
     self
   }
 
-  pub fn add_transition(mut self, from: S, by: K, to: S) -> Self {
+  pub fn add_transition(mut self, from: Stat, by: Tran, to: Stat) -> Self {
     self = self.add_state(from.clone());
     self = self.add_state(to.clone());
     self.transition.insert((from, by), to);
     self
   }
 
-  pub fn build(self) -> Spec<S, K> {
-    Spec::<S, K> {
+  pub fn build(self) -> Spec<Stat, Tran> {
+    Spec::<Stat, Tran> {
       initial: self.initial,
       states: self.states,
       accept_states: self.accept_states,

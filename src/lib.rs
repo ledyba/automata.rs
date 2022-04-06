@@ -1,1 +1,2 @@
-pub mod dfa;
+mod dfa;
+mod errors;
