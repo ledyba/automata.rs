@@ -14,6 +14,4 @@ impl Display for TransitionError {
   }
 }
 
-impl Error for TransitionError {
-
-}
+impl Error for TransitionError {}
