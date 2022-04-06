@@ -46,8 +46,17 @@ mod test {
         .add_accept_states([0])
         .build();
     let mut machine = Machine::from_spec(spec);
-    assert_eq!(Err(NoSuchTransition), machine.step('0'));
     assert_eq!(Ok(()), machine.step('a'));
     assert_eq!(0, machine.current);
+  }
+  #[test]
+  fn no_transition() {
+    let spec =
+      SpecBuilder::new(0)
+        .add_transition(0, 'a', 0)
+        .add_accept_states([0])
+        .build();
+    let mut machine = Machine::from_spec(spec);
+    assert_eq!(Err(NoSuchTransition), machine.step('0'));
   }
 }
