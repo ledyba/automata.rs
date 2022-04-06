@@ -1,2 +1,5 @@
-pub mod spec;
-pub mod machine;
+mod spec;
+mod machine;
+
+pub use spec::*;
+pub use machine::*;
