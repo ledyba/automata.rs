@@ -31,6 +31,9 @@ impl <Stat, Tran> Machine<Stat, Tran>
     }
     Ok(())
   }
+  pub fn in_acceptable_states(&self) -> bool {
+    self.spec.accept_states.contains(&self.current)
+  }
 }
 
 #[cfg(test)]
@@ -48,6 +51,7 @@ mod test {
     let mut machine = Machine::from_spec(spec);
     assert_eq!(Ok(()), machine.step('a'));
     assert_eq!(0, machine.current);
+    assert!(machine.in_acceptable_states())
   }
   #[test]
   fn no_transition() {
