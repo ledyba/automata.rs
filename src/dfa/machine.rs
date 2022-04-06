@@ -47,5 +47,7 @@ mod test {
         .build();
     let mut machine = Machine::from_spec(spec);
     assert_eq!(Err(NoSuchTransition), machine.step('0'));
+    assert_eq!(Ok(()), machine.step('a'));
+    assert_eq!(0, machine.current);
   }
 }
