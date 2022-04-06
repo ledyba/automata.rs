@@ -13,7 +13,7 @@ impl <Stat, Token> Spec <Stat, Token>
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone,
 {
-  pub fn to_dfa_spec(self) -> crate::dfa::Spec<Stat, Trans> {
+  pub fn to_dfa_spec(self) -> crate::dfa::Spec<Stat, Token> {
     todo!()
   }
 }
