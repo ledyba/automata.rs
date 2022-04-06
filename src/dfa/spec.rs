@@ -7,7 +7,7 @@ pub struct Spec<Stat, Tran>
     Tran: Eq + Hash + Clone,
 {
   pub initial: Stat,
-  pub states: HashSet<Stat>,
+  pub all_states: HashSet<Stat>,
   pub accept_states: HashSet<Stat>,
   pub transitions: HashMap<(Stat, Tran), Stat>,
 }
@@ -69,7 +69,7 @@ impl <Stat, Tran> SpecBuilder<Stat, Tran>
   pub fn build(self) -> Spec<Stat, Tran> {
     Spec::<Stat, Tran> {
       initial: self.initial,
-      states: self.states,
+      all_states: self.states,
       accept_states: self.accept_states,
       transitions: self.transition,
     }
@@ -92,7 +92,7 @@ mod tests {
         .add_transition(2, 'e', 4)
         .build();
     assert_eq!(0, spec.initial);
-    assert!(spec.states.eq(&HashSet::from([0, 1, 2, 3, 4])));
+    assert!(spec.all_states.eq(&HashSet::from([0, 1, 2, 3, 4])));
     assert!(spec.accept_states.eq(&HashSet::from([3, 4])));
     assert!(spec.transitions.eq(&HashMap::from([
       ((0, '1'), 1),
