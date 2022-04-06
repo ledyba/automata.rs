@@ -31,9 +31,11 @@ impl <Stat, Tran> Machine<Stat, Tran>
     }
     Ok(())
   }
-  pub fn in_acceptable_states(&self) -> bool {
+
+  pub fn in_accept_states(&self) -> bool {
     self.spec.accept_states.contains(&self.current)
   }
+
   pub fn has_transition(&self, token: Tran) -> bool {
     self.spec.transitions.contains_key(&(self.current.clone(), token))
   }
@@ -55,7 +57,7 @@ mod test {
     assert!(machine.has_transition('a'));
     assert_eq!(Ok(()), machine.step('a'));
     assert_eq!(0, machine.current);
-    assert!(machine.in_acceptable_states());
+    assert!(machine.in_accept_states());
   }
   #[test]
   fn no_transition() {
