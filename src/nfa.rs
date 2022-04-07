@@ -20,3 +20,10 @@ impl <Stat, Token> Spec <Stat, Token>
     todo!()
   }
 }
+
+#[cfg(test)]
+mod test {
+  #[test]
+  fn basic() {
+  }
+}
