@@ -6,7 +6,7 @@ pub struct Spec<Stat, Token>
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone,
 {
-  pub initial: Stat,
+  pub initial_state: Stat,
   pub all_states: HashSet<Stat>,
   pub accept_states: HashSet<Stat>,
   pub transitions: HashMap<(Stat, Token), Stat>,
@@ -17,7 +17,7 @@ pub struct SpecBuilder <Stat, Token>
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone,
 {
-  initial: Stat,
+  initial_state: Stat,
   all_states: HashSet<Stat>,
   accept_states: HashSet<Stat>,
   transition: HashMap<(Stat, Token), Stat>,
@@ -30,7 +30,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
 {
   pub fn new(initial: Stat) -> Self {
     Self {
-      initial: initial.clone(),
+      initial_state: initial.clone(),
       all_states: HashSet::from([initial]),
       accept_states: HashSet::new(),
       transition: HashMap::new(),
@@ -70,7 +70,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
     if !self.accept_states.is_subset(&self.all_states) {
       panic!("BUG. Accept states is not subset of all states.")
     }
-    if !self.all_states.contains(&self.initial) {
+    if !self.all_states.contains(&self.initial_state) {
       panic!("BUG. The initial state is not an element of all states.")
     }
     let trans_keys: HashSet<Stat> = self.transition.keys().map(|(k, _v)| k.clone()).collect();
@@ -78,7 +78,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
       panic!("BUG. All states in transition table is not subset of all states.")
     }
     Spec::<Stat, Token> {
-      initial: self.initial,
+      initial_state: self.initial_state,
       all_states: self.all_states,
       accept_states: self.accept_states,
       transitions: self.transition,
@@ -101,7 +101,7 @@ mod tests {
         .add_transition(2, '2', 2)
         .add_transition(2, 'e', 4)
         .build();
-    assert_eq!(0, spec.initial);
+    assert_eq!(0, spec.initial_state);
     assert!(spec.all_states.eq(&HashSet::from([0, 1, 2, 3, 4])));
     assert!(spec.accept_states.eq(&HashSet::from([3, 4])));
     assert!(spec.transitions.eq(&HashMap::from([

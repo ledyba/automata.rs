@@ -17,7 +17,7 @@ impl <Stat, Token> Machine<Stat, Token>
     Token: Eq + Hash + Clone,
 {
   pub fn from_spec(spec: Spec<Stat, Token>) -> Self {
-    let current = spec.initial.clone();
+    let current = spec.initial_state.clone();
     Self {
       spec,
       current,
