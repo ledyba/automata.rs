@@ -6,6 +6,7 @@ pub struct Spec<Stat, Token>
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone,
 {
+  initial_state: Stat,
   all_states: HashSet<Stat>,
   accept_states: HashSet<Stat>,
   transitions: HashMap<(Stat, Option<Token>), HashSet<Stat>>
