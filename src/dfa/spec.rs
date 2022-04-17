@@ -20,7 +20,7 @@ pub struct SpecBuilder <Stat, Token>
   initial_state: Stat,
   all_states: HashSet<Stat>,
   accept_states: HashSet<Stat>,
-  transition: HashMap<(Stat, Token), Stat>,
+  transitions: HashMap<(Stat, Token), Stat>,
 }
 
 impl <Stat, Token> SpecBuilder<Stat, Token>
@@ -33,7 +33,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
       initial_state: initial.clone(),
       all_states: HashSet::from([initial]),
       accept_states: HashSet::new(),
-      transition: HashMap::new(),
+      transitions: HashMap::new(),
     }
   }
 
@@ -62,7 +62,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
   pub fn add_transition(mut self, from: Stat, by: Token, to: Stat) -> Self {
     self = self.add_state(from.clone());
     self = self.add_state(to.clone());
-    self.transition.insert((from, by), to);
+    self.transitions.insert((from, by), to);
     self
   }
 
@@ -73,7 +73,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
     if !self.all_states.contains(&self.initial_state) {
       panic!("BUG. The initial state is not an element of all states.")
     }
-    let trans_keys: HashSet<Stat> = self.transition.keys().map(|(k, _v)| k.clone()).collect();
+    let trans_keys: HashSet<Stat> = self.transitions.keys().map(|(k, _v)| k.clone()).collect();
     if !trans_keys.is_subset(&self.all_states) {
       panic!("BUG. All states in transition table is not subset of all states.")
     }
@@ -81,7 +81,7 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
       initial_state: self.initial_state,
       all_states: self.all_states,
       accept_states: self.accept_states,
-      transitions: self.transition,
+      transitions: self.transitions,
     }
   }
 }
