@@ -67,16 +67,6 @@ impl <Stat, Token> SpecBuilder<Stat, Token>
   }
 
   pub fn build(self) -> Spec<Stat, Token> {
-    if !self.accept_states.is_subset(&self.all_states) {
-      panic!("BUG. Accept states is not subset of all states.")
-    }
-    if !self.all_states.contains(&self.initial_state) {
-      panic!("BUG. The initial state is not an element of all states.")
-    }
-    let trans_keys: HashSet<Stat> = self.transitions.keys().map(|(k, _v)| k.clone()).collect();
-    if !trans_keys.is_subset(&self.all_states) {
-      panic!("BUG. All states in transition table is not subset of all states.")
-    }
     Spec::<Stat, Token> {
       initial_state: self.initial_state,
       all_states: self.all_states,
