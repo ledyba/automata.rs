@@ -112,6 +112,7 @@ impl <Stat, Token> Spec<Stat, Token>
 #[cfg(test)]
 mod test {
   use super::*;
+
   #[test]
   fn basic() {
     let mut spec: Spec<usize, char> = Spec::new(0);
@@ -122,6 +123,8 @@ mod test {
     assert_eq!(0, spec.initial_state);
     assert_eq!(HashSet::from([1]), spec.accept_states);
   }
+
+  #[test]
   fn empty() {
     let spec: Spec<usize, usize> = Spec::new(0);
     assert_eq!(0, spec.initial_state);
