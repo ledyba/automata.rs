@@ -29,10 +29,11 @@ impl <Stat, Token> Machine<Stat, Token>
 
   pub fn step(&mut self, by: Token) {
     let mut next = HashSet::<Stat>::new();
-    for stat in self.current.iter() {
+    for stat in &self.current {
       next.extend(self.spec.transitions_by_any(stat));
       next.extend(self.spec.transitions_by_token(stat, &by));
     }
+    self.current = next;
     self.evaluate_epsilons();
   }
 
@@ -62,5 +63,17 @@ mod test {
       .add_epsilon_transition(0, 1);
     let m = Machine::from_spec(spec);
     assert_eq!(HashSet::from([0, 1]), m.current)
+  }
+
+  #[test]
+  fn step_once() {
+    let mut spec: Spec<usize, char> = Spec::new(0);
+    spec
+      .add_accept_state(1)
+      .add_epsilon_transition(0, 1)
+      .add_token_transition(1, 'a', 2);
+    let mut m = Machine::from_spec(spec);
+    m.step('a');
+    assert_eq!(HashSet::from([2]), m.current)
   }
 }
