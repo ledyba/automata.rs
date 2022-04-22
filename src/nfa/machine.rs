@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use std::fmt::Debug;
 use std::hash::Hash;
-use super::spec::Spec;
+use crate::nfa::spec::Spec;
 
 pub struct Machine<Stat, Token>
   where
