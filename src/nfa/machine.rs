@@ -9,7 +9,7 @@ pub struct Machine<Stat, Token>
     Token: Eq + Hash + Clone + Debug,
 {
   spec: Spec<Stat, Token>,
-  states: HashSet<Stat>,
+  current: HashSet<Stat>,
 }
 
 impl <Stat, Token> Machine<Stat, Token>
@@ -20,7 +20,7 @@ impl <Stat, Token> Machine<Stat, Token>
   pub fn from_spec(spec: Spec<Stat, Token>) -> Self {
     Self {
       spec,
-      states: HashSet::new(),
+      current: HashSet::new(),
     }
   }
 }
