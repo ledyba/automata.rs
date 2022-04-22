@@ -83,6 +83,21 @@ impl <Stat, Token> Spec<Stat, Token>
     self
   }
 
+  pub fn add_any_transitions<const N: usize>(&mut self, from: Stat, to_states: [Stat; N]) -> &mut Self {
+    self.add_transitions(from, Input::Any, to_states);
+    self
+  }
+
+  pub fn add_epsilon_transition(&mut self, from: Stat, to: Stat) -> &mut Self {
+    self.add_transition(from, Input::Epsilon, to);
+    self
+  }
+
+  pub fn add_epsilon_transitions<const N: usize>(&mut self, from: Stat, to_states: [Stat; N]) -> &mut Self {
+    self.add_transitions(from, Input::Epsilon, to_states);
+    self
+  }
+
   pub fn add_token_transition(&mut self, from: Stat, by: Token, to: Stat) -> &mut Self {
     self.add_transition(from, Input::Token(by), to);
     self
