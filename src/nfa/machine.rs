@@ -18,9 +18,11 @@ impl <Stat, Token> Machine<Stat, Token>
     Token: Eq + Hash + Clone + Debug,
 {
   pub fn from_spec(spec: Spec<Stat, Token>) -> Self {
+    let current = HashSet::from([spec.initial_state().clone()]);
     Self {
       spec,
-      current: HashSet::new(),
+      current,
     }
   }
+
 }

@@ -107,6 +107,10 @@ impl <Stat, Token> Spec<Stat, Token>
     self.add_transitions(from, Input::Token(by), to_states);
     self
   }
+
+  pub fn initial_state(&self) -> Stat {
+    self.initial_state.clone()
+  }
 }
 
 #[cfg(test)]
