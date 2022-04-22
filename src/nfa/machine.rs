@@ -24,5 +24,4 @@ impl <Stat, Token> Machine<Stat, Token>
       current,
     }
   }
-
 }
