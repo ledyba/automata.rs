@@ -113,7 +113,9 @@ impl <Stat, Token> Spec<Stat, Token>
   }
 
   fn transitions_of(&self, from: &Stat, input: &Input<Token>) -> HashSet<Stat> {
-    self.transitions.get(&(from.clone(), input.clone()))
+    let key = (from.clone(), input.clone());
+    self.transitions
+      .get(&key)
       .map(|it| it.clone())
       .unwrap_or_else(|| HashSet::new())
   }
