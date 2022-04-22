@@ -17,10 +17,10 @@ impl <Stat, Token> Spec<Stat, Token>
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone,
 {
-  pub fn new(initial: Stat) -> Self {
+  pub fn new(initial_state: Stat) -> Self {
     Self {
-      initial_state: initial.clone(),
-      all_states: HashSet::from([initial]),
+      initial_state: initial_state.clone(),
+      all_states: HashSet::<Stat>::from([initial_state]),
       accept_states: HashSet::new(),
       transitions: HashMap::new(),
     }

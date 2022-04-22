@@ -31,8 +31,8 @@ impl <Stat, Token> Spec<Stat, Token>
 {
   pub fn new(initial_state: Stat) -> Self {
     Self {
-      initial_state,
-      all_states: HashSet::new(),
+      initial_state: initial_state.clone(),
+      all_states: HashSet::from([initial_state]),
       accept_states: HashSet::new(),
       transitions: HashMap::new(),
     }
