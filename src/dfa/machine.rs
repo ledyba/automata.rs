@@ -23,6 +23,7 @@ impl <Stat, Token> Machine<Stat, Token>
       current,
     }
   }
+
   pub fn step(&mut self, token: Token) -> Result<(), TransitionError> {
     if let Some(next) = self.spec.transition_of(self.current.clone(), token) {
       self.current = next.clone();
