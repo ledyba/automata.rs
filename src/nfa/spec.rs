@@ -124,6 +124,7 @@ mod test {
   }
   fn empty() {
     let spec: Spec<usize, usize> = Spec::new(0);
+    assert_eq!(0, spec.initial_state);
     assert_eq!(HashSet::from([0]), spec.all_states);
   }
 }
