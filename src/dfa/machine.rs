@@ -17,14 +17,14 @@ impl <Stat, Token> Machine<Stat, Token>
     Token: Eq + Hash + Clone,
 {
   pub fn from_spec(spec: Spec<Stat, Token>) -> Self {
-    let current = spec.initial_state.clone();
+    let current = spec.initial_state();
     Self {
       spec,
       current,
     }
   }
   pub fn step(&mut self, token: Token) -> Result<(), TransitionError> {
-    if let Some(next) = self.spec.transitions.get(&(self.current.clone(), token)) {
+    if let Some(next) = self.spec.transition_of(self.current.clone(), token) {
       self.current = next.clone();
     } else {
       return Err(TransitionError::NoSuchTransition);
@@ -33,11 +33,11 @@ impl <Stat, Token> Machine<Stat, Token>
   }
 
   pub fn in_accept_states(&self) -> bool {
-    self.spec.accept_states.contains(&self.current)
+    self.spec.is_acceptable_state(&self.current)
   }
 
   pub fn has_transition(&self, token: Token) -> bool {
-    self.spec.transitions.contains_key(&(self.current.clone(), token))
+    self.spec.has_transition(self.current.clone(), token)
   }
 }
 
@@ -48,11 +48,10 @@ mod test {
   use super::*;
   #[test]
   fn basic() {
-    let spec =
-      SpecBuilder::new(0)
+    let mut spec = Spec::new(0);
+      spec
         .add_transition(0, 'a', 0)
-        .add_accept_states([0])
-        .build();
+        .add_accept_states([0]);
     let mut machine = Machine::from_spec(spec);
     assert!(machine.has_transition('a'));
     assert_eq!(Ok(()), machine.step('a'));
@@ -61,11 +60,10 @@ mod test {
   }
   #[test]
   fn no_transition() {
-    let spec =
-      SpecBuilder::new(0)
-        .add_transition(0, 'a', 0)
-        .add_accept_states([0])
-        .build();
+    let mut spec = Spec::new(0);
+    spec
+      .add_transition(0, 'a', 0)
+      .add_accept_states([0]);
     let mut machine = Machine::from_spec(spec);
     assert!(!machine.has_transition('0'));
     assert_eq!(Err(NoSuchTransition), machine.step('0'));
