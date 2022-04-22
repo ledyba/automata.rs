@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use std::hash::Hash;
 
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-enum Input<Token>
+pub enum Input<Token>
   where
    Token: Eq + Hash + Clone + Debug,
 {
@@ -121,5 +121,9 @@ mod test {
       .add_token_transition(0, 'a', 1);
     assert_eq!(0, spec.initial_state);
     assert_eq!(HashSet::from([1]), spec.accept_states);
+  }
+  fn empty() {
+    let spec: Spec<usize, usize> = Spec::new(0);
+    assert_eq!(HashSet::from([0]), spec.all_states);
   }
 }
