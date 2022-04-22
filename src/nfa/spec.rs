@@ -114,7 +114,7 @@ mod test {
   use super::*;
   #[test]
   fn basic() {
-    let mut spec: Spec<usize, char> = Spec::new(0 as usize);
+    let mut spec: Spec<usize, char> = Spec::new(0);
     spec
       .add_accept_state(1)
       .add_any_transition(0, 1)
