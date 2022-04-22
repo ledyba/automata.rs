@@ -111,6 +111,24 @@ impl <Stat, Token> Spec<Stat, Token>
   pub fn initial_state(&self) -> Stat {
     self.initial_state.clone()
   }
+
+  fn transitions_of(&self, from: &Stat, input: &Input<Token>) -> HashSet<Stat> {
+    self.transitions.get(&(from.clone(), input.clone()))
+      .map(|it| it.clone())
+      .unwrap_or_else(|| HashSet::new())
+  }
+
+  pub fn transitions_by_any(&self, from: &Stat) -> HashSet<Stat> {
+    self.transitions_of(from, &Input::Any)
+  }
+
+  pub fn transitions_by_epsilon(&self, from: &Stat) -> HashSet<Stat> {
+    self.transitions_of(from, &Input::Epsilon)
+  }
+
+  pub fn transitions_by_token(&self, from: &Stat, by: &Token) -> HashSet<Stat> {
+    self.transitions_of(from, &Input::Token(by.clone()))
+  }
 }
 
 #[cfg(test)]
