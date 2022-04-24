@@ -54,12 +54,17 @@ mod test {
 
   #[test]
   fn basic() {
-    let mut spec: nfa::Spec<usize, char> = nfa::Spec::new(0);
-    spec.add_epsilon_transition(0, 1);
-    assert_eq!(0, spec.tokens().len());
-    spec.add_token_transition(0, 'a', 1);
-    assert_eq!(1, spec.tokens().len());
+    let spec = {
+      let mut spec: nfa::Spec<usize, char> = nfa::Spec::new(0);
+      spec
+        .add_epsilon_transition(0, 1)
+        .add_token_transition(0, 'a', 2);
+      translate_to_dfa(&spec)
+    };
+    assert_set_eq([0, 1], spec.initial_state());
+  }
 
-
+  fn assert_set_eq<T: Eq + Hash, V: IntoIterator<Item=T>, const N: usize>(left: [T; N], right: V) {
+    assert!(HashSet::<T>::from(left) == HashSet::from_iter(right.into_iter()));
   }
 }
