@@ -59,5 +59,7 @@ mod test {
     assert_eq!(0, spec.tokens().len());
     spec.add_token_transition(0, 'a', 1);
     assert_eq!(1, spec.tokens().len());
+
+
   }
 }

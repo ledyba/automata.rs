@@ -167,6 +167,15 @@ mod test {
   }
 
   #[test]
+  fn check_internal() {
+    let mut spec: Spec<usize, char> = Spec::new(0);
+    spec.add_epsilon_transition(0, 1);
+    assert_eq!(0, spec.tokens().len());
+    spec.add_token_transition(0, 'a', 1);
+    assert_eq!(1, spec.tokens().len());
+  }
+
+  #[test]
   fn empty() {
     let spec: Spec<usize, usize> = Spec::new(0);
     assert_eq!(0, spec.initial_state);
