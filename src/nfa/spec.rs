@@ -131,6 +131,24 @@ impl <Stat, Token> Spec<Stat, Token>
   pub fn transitions_by_token(&self, from: &Stat, by: &Token) -> HashSet<Stat> {
     self.transitions_of(from, &Input::Token(by.clone()))
   }
+
+  pub fn tokens(&self) -> Vec<Token> {
+    self.transitions.keys().filter_map(|(_k,v)| {
+      if let Input::Token(token) = v {
+        Some(token.clone())
+      } else {
+        None
+      }
+    }).collect()
+  }
+
+  pub fn all_states(&self) -> HashSet<Stat> {
+    self.all_states.clone()
+  }
+
+  pub fn accept_states(&self) -> HashSet<Stat> {
+    self.accept_states.clone()
+  }
 }
 
 #[cfg(test)]
