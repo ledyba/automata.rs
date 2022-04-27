@@ -79,11 +79,12 @@ mod test {
       let mut spec: nfa::Spec<usize, char> = nfa::Spec::new(0);
       spec
         .add_epsilon_transition(0, 1)
-        .add_token_transition(0, 'a', 2);
+        .add_token_transition(0, 'a', 2)
+        .add_token_transition(0, 'a', 0);
       translate_to_dfa(&spec)
     };
     assert_set_eq([0, 1], spec.initial_state());
-    assert_sets_eq([vec![0], vec![1]], spec.all_states());
+    assert_sets_eq([vec![0, 1], vec![0, 2]], spec.all_states());
   }
 
   fn assert_set_eq<T: Eq + Hash + Debug, V: IntoIterator<Item=T>, const N: usize>(left: [T; N], right: V) {
