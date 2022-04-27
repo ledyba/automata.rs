@@ -67,8 +67,16 @@ impl <Stat, Token> Spec<Stat, Token>
     self.transitions.contains_key(&(state, token))
   }
 
+  pub fn len(&self) -> usize {
+    self.all_states.len()
+  }
+
   pub fn is_acceptable_state(&self, state: &Stat) -> bool {
     self.accept_states.contains(state)
+  }
+
+  pub fn all_states(&self) -> HashSet<Stat> {
+    self.all_states.clone()
   }
 }
 

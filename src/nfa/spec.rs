@@ -132,6 +132,10 @@ impl <Stat, Token> Spec<Stat, Token>
     self.transitions_of(from, &Input::Token(by.clone()))
   }
 
+  pub fn is_acceptable_state(&self, state: &Stat) -> bool {
+    self.accept_states.contains(state)
+  }
+
   pub fn tokens(&self) -> Vec<Token> {
     self.transitions.keys().filter_map(|(_k,v)| {
       if let Input::Token(token) = v {
