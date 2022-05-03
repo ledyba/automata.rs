@@ -89,14 +89,17 @@ mod test {
   fn identity() {
     assert_eq!(0, distance("koi", "koi"))
   }
+
   #[test]
   fn replace() {
     assert_eq!(2, distance("koi", "zoi"))
   }
+
   #[test]
   fn insert() {
     assert_eq!(1, distance("koi", "kooi"))
   }
+
   #[test]
   fn delete() {
     assert_eq!(1, distance("koi", "ki"))
