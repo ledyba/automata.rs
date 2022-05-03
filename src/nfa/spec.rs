@@ -187,5 +187,6 @@ mod test {
     let spec: Spec<usize, usize> = Spec::new(0);
     assert_eq!(0, spec.initial_state);
     assert_eq!(HashSet::from([0]), spec.all_states);
+    assert_eq!(true, spec.accept_states.is_empty());
   }
 }
