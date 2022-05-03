@@ -167,6 +167,9 @@ mod test {
       .add_any_transition(0, 1)
       .add_token_transition(0, 'a', 1);
     assert_eq!(0, spec.initial_state);
+    assert_eq!(2, spec.transitions.len());
+    assert_eq!(2, spec.all_states.len());
+    assert_eq!(1, spec.tokens().len());
     assert_eq!(HashSet::from([1]), spec.accept_states);
   }
 
