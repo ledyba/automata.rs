@@ -61,4 +61,13 @@ mod test {
     assert!(m.contains("koi"));
     assert!(!m.contains("ko"));
   }
+
+  #[test]
+  fn all_kind() {
+    let m = Machine::new("java", 3);
+    assert!(m.contains("ja"));
+    assert!(m.contains("kav"));
+    assert!(m.contains("kava"));
+    assert!(!m.contains("kara"));
+  }
 }
