@@ -49,6 +49,10 @@ impl <Stat, Token> Machine<Stat, Token>
       self.current = next;
     }
   }
+
+  pub fn in_accept_state(&self) -> bool {
+    self.current.iter().any(|it| self.spec.is_acceptable_state(it))
+  }
 }
 
 #[cfg(test)]
