@@ -1,5 +1,5 @@
-mod spec;
+mod machine;
 mod def;
 
 pub use def::distance;
-pub use spec::Machine;
+pub use machine::Machine;
