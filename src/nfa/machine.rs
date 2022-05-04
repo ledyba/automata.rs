@@ -3,21 +3,21 @@ use std::fmt::Debug;
 use std::hash::Hash;
 use crate::nfa::spec::Spec;
 
-pub struct Machine<Stat, Token>
+pub struct Machine<'s, Stat, Token>
   where
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone + Debug,
 {
-  spec: Spec<Stat, Token>,
+  spec: &'s Spec<Stat, Token>,
   current: HashSet<Stat>,
 }
 
-impl <Stat, Token> Machine<Stat, Token>
+impl <'s, Stat, Token> Machine<'s, Stat, Token>
   where
     Stat: Eq + Hash + Clone,
     Token: Eq + Hash + Clone + Debug,
 {
-  pub fn from_spec(spec: Spec<Stat, Token>) -> Self {
+  pub fn from_spec(spec: &'s Spec<Stat, Token>) -> Self {
     let current = HashSet::from([spec.initial_state().clone()]);
     let mut machine = Self {
       spec,
@@ -65,7 +65,7 @@ mod test {
     spec
       .add_accept_state(1)
       .add_epsilon_transition(0, 1);
-    let m = Machine::from_spec(spec);
+    let m = Machine::from_spec(&spec);
     assert_eq!(HashSet::from([0, 1]), m.current)
   }
 
@@ -76,7 +76,7 @@ mod test {
       .add_accept_state(1)
       .add_epsilon_transition(0, 1)
       .add_token_transition(1, 'a', 2);
-    let mut m = Machine::from_spec(spec);
+    let mut m = Machine::from_spec(&spec);
     m.step('a');
     assert_eq!(HashSet::from([2]), m.current)
   }

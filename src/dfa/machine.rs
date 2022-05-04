@@ -19,7 +19,7 @@ impl <'s, Stat, Token> Machine<'s, Stat, Token>
   pub fn from_spec(spec: &'s Spec<Stat, Token>) -> Self {
     let current = spec.initial_state();
     Self {
-      spec: &spec,
+      spec,
       current,
     }
   }

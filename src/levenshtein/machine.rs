@@ -39,7 +39,7 @@ impl Machine {
   pub fn contains<'a>(&self, word: impl Into<&'a str>) -> bool {
     let word = word.into();
     let word = word.as_bytes();
-    let mut machine = crate::nfa::Machine::from_spec(self.spec.clone());
+    let mut machine = crate::nfa::Machine::from_spec(&self.spec);
     for byte in word {
       let byte = *byte;
       machine.step(byte);
