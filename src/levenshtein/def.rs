@@ -104,4 +104,13 @@ mod test {
   fn delete() {
     assert_eq!(1, distance("koi", "ki"))
   }
+
+  #[test]
+  fn it_is_distance() {
+    let a = "kirvkbbclehrilntnnjfhrnvjhrchgt";
+    let b = "dkritrjdiudtivniutfvhgluhlhtuinef";
+    let c = "vvrrjrvgvubjvthejvcdkvtebngcejr";
+    assert_eq!(distance(b, a), distance(a, b));
+    assert!(distance(a, b) + distance(b, c) >= distance(a, c));
+  }
 }

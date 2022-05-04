@@ -18,3 +18,11 @@ impl Spec {
   }
 }
 
+#[cfg(test)]
+mod test {
+  use super::*;
+
+  #[test]
+  fn basic() {
+  }
+}
