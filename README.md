@@ -1,5 +1,13 @@
 # Various implementation of automata
 
+## Implemented automata
+
+- Building blocks
+  - [DFA(Deterministic Finite Automaton)](./src/dfa)
+  - [NFA(Nondeterministic Finite Automaton)](./src/nfa)
+- Application
+  - [Levenshtein Automata](./src/levenshtein)
+
 # References
 
 ## Levenshtein Automata
