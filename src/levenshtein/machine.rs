@@ -68,6 +68,9 @@ mod test {
     assert!(m.contains("ja"));
     assert!(m.contains("kav"));
     assert!(m.contains("kava"));
+    assert!(!m.contains("kavaam"));
+    assert_eq!(4, distance("java", "kavaam"));
     assert!(!m.contains("kara"));
+    assert_eq!(4, distance("java", "kara"));
   }
 }
