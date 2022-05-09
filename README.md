@@ -5,6 +5,7 @@
 - Building blocks
   - [DFA(Deterministic Finite Automaton)](./src/dfa)
   - [NFA(Nondeterministic Finite Automaton)](./src/nfa)
+    - You can convert it to DFA.
 - Application
   - [Levenshtein Automata](./src/levenshtein)
 
