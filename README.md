@@ -1,4 +1,4 @@
-# Various implementation of automata
+# Various implementations of automata
 
 ## Implemented automata
 
